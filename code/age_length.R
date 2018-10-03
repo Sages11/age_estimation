@@ -72,10 +72,15 @@ for(i in 1:iterations){
                 fitpro$P, fitpro$df)
 }
 
+data_all_years <- data.frame(data_all_years)
+for(i in 1:variables){
+  names(data_all_years)[i]= variable_names[i]
+}
+
 length(data_all_years[i,])
 summary(fitpro)
-data_all_years <- data.frame(data_all_years)
-names(data_all_years) <- variable_names
+
+names(data_all_years)[] <- variable_names
 class(data_all_years)
 
 df <- data_prep(age_df, 2015)
