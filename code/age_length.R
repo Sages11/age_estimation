@@ -52,29 +52,30 @@ iterations <- length(year_vector) #
 
 data_all_years <- matrix(ncol = variables, nrow = iterations)
 
-for(i in year_vector){
-  i <- 1
+for(i in 1:iterations){
   df <- data_prep(age_df, year_vector[i])
   (fitpro <- mix(as.mixdata(df), mixparam(mu=c(30,50,65,75), sigma=c(5,5,5,5)), dist='gamma', iterlim=5000)) 
   plot(fitpro, main=year_vector[i])
   data_all_years[i,] <-c(year_vector[i], 
                 fitpro$parameters$pi[1], fitpro$se$pi.se[1], 
                 fitpro$parameters$mu[1], fitpro$se$mu.se[1],
-                fitpro$parameters$sigma[1], fitpro$sigma$mu.se[1],
+                fitpro$parameters$sigma[1], fitpro$se$sigma.se[1],
                 fitpro$parameters$pi[2], fitpro$se$pi.se[2], 
                 fitpro$parameters$mu[2], fitpro$se$mu.se[2],
-                fitpro$parameters$sigma[2], fitpro$sigma$mu.se[2],
+                fitpro$parameters$sigma[2], fitpro$se$sigma.se[2],
                 fitpro$parameters$pi[3], fitpro$se$pi.se[3], 
                 fitpro$parameters$mu[3], fitpro$se$mu.se[3],
-                fitpro$parameters$sigma[3], fitpro$sigma$mu.se[3],
+                fitpro$parameters$sigma[3], fitpro$se$sigma.se[3],
                 fitpro$parameters$pi[4], fitpro$se$pi.se[4], 
                 fitpro$parameters$mu[4], fitpro$se$mu.se[4],
-                fitpro$parameters$sigma[4], fitpro$sigma$mu.se[4],
+                fitpro$parameters$sigma[4], fitpro$se$sigma.se[4],
                 fitpro$P, fitpro$df)
 }
+
+length(data_all_years[i,])
 summary(fitpro)
-data_all_years
-data.frame(data_all_years)
+data_all_years <- data.frame(data_all_years)
+names(data_all_years) <- variable_names
 class(data_all_years)
 
 df <- data_prep(age_df, 2015)
