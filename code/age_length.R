@@ -30,13 +30,14 @@ age_df <- df1%>%
           ddate = as.Date(as.POSIXct(ddate, format = "%m/%d/%Y %H:%M")),
           day_of_year = yday(ddate),
           month_of_year = month(ddate),
-          season = if(month_of_year < 7) {"A"}; else {"B"},
+          season = ifelse(month_of_year < 7, "A", "B", na.rm = TRUE),
           #yyear = as.factor(yyear),
           area = as.factor(area),
           sex = as.factor(sex),
           maturity= as.factor(maturity)
           ) 
 
+unique(age_df$month_of_year)
 unique(age_df$season)
 # analysis ----
 year_vector <- sort(unique(age_df$yyear))
