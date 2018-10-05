@@ -25,26 +25,67 @@ age_df <- df1%>%
     ddate = deployment_date,
     maturity = maturity_description,
     lat = retrieval_latitude,
-    long = retrieval_longitude,)%>%
-  mutate(
-          ddate = as.Date(as.POSIXct(ddate, format = "%m/%d/%Y %H:%M")),
+    long = retrieval_longitude) %>%
+  mutate(ddate = mdy_hm(ddate),
           day_of_year = yday(ddate),
           month_of_year = month(ddate),
-          season = ifelse(month_of_year < 7, "A", "B", na.rm = TRUE),
+         season = case_when(month_of_year<7 ~ "A",
+                            month_of_year>=7 ~"B"),# this not working
           #yyear = as.factor(yyear),
           area = as.factor(area),
           sex = as.factor(sex),
           maturity= as.factor(maturity)
           ) 
 
-unique(age_df$month_of_year)
-unique(age_df$season)
 # analysis ----
 year_vector <- sort(unique(age_df$yyear))
-# remove years 1986-88 since data is too sparse to analyse.
-year_vector <- year_vector[4:(length(year_vector)-1)]
+# remove years 1986-89 since data is too sparse to analyse.
+year_vector <- year_vector[5:(length(year_vector)-1)]
+season_vector <- c("A", "B")
+#######################################################
+# create a dataframe with information for each 1/2 year (Jan - June) & (July - Dec) (Or season A and Season B)
+#######################################################
+variable_names <-c("year", "season",
+                   "pi1", "pi2", "pi3", "pi4", 
+                   "mu1", "mu2", "mu3", "mu4",   
+                   "sigma1", "sigma2", "sigma3", "sigma4", 
+                   "pi.se1", "pi.se2", "pi.se3", "pi.se4", 
+                   "mu.se1", "mu.se2", "mu.se3", "mu.se4",  
+                   "sigma.se1", "sigma.se2", "sigma.se3", "sigma.se4",
+                   "chi_pvalue", "chi_df")
+variables <- length(variable_names)
+iterations <- length(year_vector) *2 # *2 for season A and B 
 
+data_all_years <- matrix(ncol = variables, nrow = iterations)
+
+for(i in 1:iterations){
+  for(j in 1:2){
+    df <- data_prep_season(age_df, year_vector[i], season_vector[j])
+    (fitpro <- mix(as.mixdata(df), mixparam(mu=c(30,50,65,75), sigma=c(3.42,5,5,5)), dist='norm')) 
+                   #constr =mixconstr(consigma = "SFX", fixsigma = c(TRUE, FALSE, FALSE, TRUE)), iterlim=5000)) 
+    plot(fitpro, main=year_vector[i], sub = season_vector[j])
+    data_all_years[i,] <-c(year_vector[i], season_vector[j],
+                           fitpro$parameters$pi, 
+                           fitpro$parameters$mu, 
+                           fitpro$parameters$sigma, 
+                           fitpro$se$pi.se, 
+                           fitpro$se$mu.se,
+                           fitpro$se$sigma.se,
+                           fitpro$P, fitpro$df)
+  }
+
+}
+
+data_all_years <- data.frame(data_all_years)
+for(i in 1:variables){
+  names(data_all_years)[i]= variable_names[i]
+}
+class(data_all_years)
+data_all_years 
+
+#######################################################
 # create a dataframe with information for each year
+#######################################################
 
 variable_names <-c("year", 
                    "pi1", "pi2", "pi3", "pi4", 
@@ -92,20 +133,3 @@ df <- data_prep(age_df, 2015)
 plot(fitpro)
 summary(fitpro)
 
-data_all_years[i,] <-c(year_vector[i], 
-                       fitpro$parameters$pi[1], fitpro$se$pi.se[1], 
-                       fitpro$parameters$mu[1], fitpro$se$mu.se[1],
-                       fitpro$parameters$sigma[1], fitpro$se$sigma.se[1],
-                       fitpro$parameters$pi[2], fitpro$se$pi.se[2], 
-                       fitpro$parameters$mu[2], fitpro$se$mu.se[2],
-                       fitpro$parameters$sigma[2], fitpro$se$sigma.se[2],
-                       fitpro$parameters$pi[3], fitpro$se$pi.se[3], 
-                       fitpro$parameters$mu[3], fitpro$se$mu.se[3],
-                       fitpro$parameters$sigma[3], fitpro$se$sigma.se[3],
-                       fitpro$parameters$pi[4], fitpro$se$pi.se[4], 
-                       fitpro$parameters$mu[4], fitpro$se$mu.se[4],
-                       fitpro$parameters$sigma[4], fitpro$se$sigma.se[4],
-                       fitpro$parameters$pi[5], fitpro$se$pi.se[5], 
-                       fitpro$parameters$mu[5], fitpro$se$mu.se[5],
-                       fitpro$parameters$sigma[5], fitpro$se$sigma.se[5],
-                       fitpro$P, fitpro$df)
