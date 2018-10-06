@@ -40,7 +40,7 @@ age_df <- df1%>%
 # analysis ----
 year_vector <- sort(unique(age_df$yyear))
 # remove years 1986-89 since data is too sparse to analyse.
-year_vector <- year_vector[20:(length(year_vector)-1)]
+year_vector <- year_vector[5:(length(year_vector)-1)]
 season_vector <- c("A", "B")
 #######################################################
 # create a dataframe with information for each 1/2 year (Jan - June) & (July - Dec) (Or season A and Season B)
@@ -63,8 +63,15 @@ par(mfrow= c(4,2))
 for(i in 1:iterations){
   for(j in 1:2){
     df <- data_prep_season(age_df, year_vector[i], season_vector[j])
-    (fitpro <- mix(as.mixdata(df), mixparam(mu=c(30,50,65,75), sigma=c(3,4,4,4)), dist='norm')) 
-                   #constr =mixconstr(consigma = "SFX", fixsigma = c(TRUE, FALSE, FALSE, TRUE)), iterlim=5000)) 
+    
+    if (season_vector[j] == "A"){
+      (fitpro <- mix(as.mixdata(df), mixparam(mu=c(30,50,65,75), sigma=c(3.42,4,4,4)), dist='norm')) 
+       # constr =mixconstr(consigma = "SEQ")))#, fixsigma = c(TRUE, FALSE, FALSE, TRUE)), iterlim=5000)) 
+    } else{ 
+      (fitpro <- mix(as.mixdata(df), mixparam(mu=c(45,60,75,85), sigma=c(5,5,5,5), pi = c(0.05, 0.50, .435, .015)), dist='norm'))
+       # constr = mixconstr(conpi = "PFX", fixpi = c(FALSE, FALSE, FALSE, TRUE))))                     
+    }
+    
     plot(fitpro, main=year_vector[i], sub = season_vector[j])
     data_all_years[(i+ iterations/2*(j-1)),] <-c(year_vector[i], season_vector[j],
                            fitpro$parameters$pi, 
