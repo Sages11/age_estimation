@@ -176,7 +176,6 @@ i <- 1997
 mu=c(45,65,75,85)
 df <- data_prep_season(age_df, i, "B")
 (fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5)), dist='norm', iterlim=5000))
-#(fitpro <- mix(as.mixdata(df), mixparam(mu=c(40,50,70,85), sigma=c(3.42,4,4,4)), dist='norm')) 
 plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4]))
 summary(fitpro)
 
@@ -184,15 +183,72 @@ i <- 1998
 mu=c(40,52,68,80)
 df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
 (fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,5,5,5)), dist='norm',constr =mixconstr(consigma = "SEQ"), iterlim=5000))
-#(fitpro <- mix(as.mixdata(df), mixparam(mu=c(40,50,70,85), sigma=c(3.42,4,4,4)), dist='norm')) 
 plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4]))
 summary(fitpro)
 
 i <- 1998
-mu=c(30,47,63,80)
+mu=c(30,47,63,75,85)
 df <- data_prep_season(age_df, i, "B")
-(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5)),constr =mixconstr(consigma = "SEQ"), dist='norm', iterlim=5000))
-#(fitpro <- mix(as.mixdata(df), mixparam(mu=c(40,50,70,85), sigma=c(3.42,4,4,4)), dist='norm')) 
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5,5)),constr =mixconstr(consigma = "SEQ"), dist='norm', iterlim=5000))
 plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4]))
 summary(fitpro)
 
+
+i <- 1999
+mu=c(30,50,63,73)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,5,5,5)), dist='norm'))#,constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 1999
+mu=c(30,47,63,75,85)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5,5)),constr =mixconstr(consigma = "SEQ"), dist='norm', iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2000
+mu=c(27,48,60,73,85)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,4,4,3,4)), dist='norm'))#,constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2000
+mu=c(30,47,63,75,85)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5,5)),constr =mixconstr(consigma = "SEQ"), dist='norm', iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+# Skip to 2006
+par(mfrow= c(4,2))
+
+i <- 2006
+mu=c(30,52,63,80)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5)), dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2006
+mu=c(30,47,63,75,85)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5,5)),constr =mixconstr(consigma = "SEQ"), dist='norm', iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2007
+mu=c(30,52,63,80)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5)), dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2007
+mu=c(30,47,63,75,85)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(5,5,5,5,5)),constr =mixconstr(consigma = "SEQ"), dist='norm', iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
