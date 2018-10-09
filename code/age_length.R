@@ -9,6 +9,7 @@ source('code/age_length_functions.R')
 
 citation('mixdist')
 
+setwd("H:\\sarah\\Tools\\Utool\\dsim\\length analysis\\age_estimation")
 # data ----
 df1 <- read_csv('data/Chinooklengths19862016.csv') %>% 
   dplyr::select(
@@ -29,12 +30,12 @@ age_df <- df1%>%
   mutate(ddate = mdy_hm(ddate),
           day_of_year = yday(ddate),
           month_of_year = month(ddate),
-         season = case_when(month_of_year<7 ~ "A",
+          season = case_when(month_of_year<7 ~ "A",
                             month_of_year>=7 ~"B"),# this not working
           #yyear = as.factor(yyear),
           area = as.factor(area),
           sex = as.factor(sex),
-          maturity= as.factor(maturity)
+          maturity= as.factor(maturity),
           ) 
 
 # analysis ----
@@ -81,6 +82,7 @@ for(i in 1:iterations){
                            fitpro$se$mu.se,
                            fitpro$se$sigma.se,
                            fitpro$P, fitpro$df)
+    data_all_years <- data_all_years %>%
   }
 
 }
@@ -91,6 +93,16 @@ for(i in 1:variables){
 }
 class(data_all_years)
 data_all_years 
+
+# Below a display of particular years for which an age length key exists.
+display <- data_all_years[c(8:10, 35:37, 17:19, 44:46), 1:6]
+round(dispaly[,3:6],2)
+# By visually inspecting the graphs produced for each season of each year, 
+# and seeing how well the individual distributions jive with the combined and original distributions, 
+# and by comparing the percentage of each age to those that would be produced using age length keys,
+# it appears that some years do a very good job all round using the generic models above. However some could do with some more years specific
+# parameter starting values.
+
 
 #######################################################
 # create a dataframe with information for each year
@@ -129,8 +141,15 @@ data_all_years <- data.frame(data_all_years)
 for(i in 1:variables){
   names(data_all_years)[i]= variable_names[i]
 }
+data_all_years [, 3:28] <- lapply(data_all_years [, 3:28], factorconvert)
 class(data_all_years)
 data_all_years 
+
+
+#To look at certain years in particular:
+
+display <- data_all_years[c(8:10, 35:37, 17:19, 44:46), 1:6]
+display[, 3:6] <-  round(display[,3:6],2)
 
 mean(data_all_years$sigma1[13:19], na.omit="TRUE")
 mean(data_all_years$sigma4[c(9,10,22,23,27)], na.omit="TRUE")
@@ -140,5 +159,23 @@ mean(data_all_years$sigma4, na.omit="TRUE")
 df <- data_prep(age_df, 2015)
 (fitpro <- mix(as.mixdata(df), mixparam(mu=c(30,50,65,75,85), sigma=c(5,5,5,5,5)), dist='gamma', iterlim=5000)) 
 plot(fitpro)
+summary(fitpro)
+
+display2 <- data_all_years[c(22:26, 49:53), 1:6]
+display2[, 3:6] <-  round(display[,3:6],2)
+
+#To look at certain years in particular:
+
+df <- data_prep_season(age_df, 1997, "A")
+(fitpro <- mix(as.mixdata(df), mixparam(mu=c(40,50,70,85), sigma=c(3.42,4,4,4)), dist='norm')) 
+plot(fitpro, main=year_vector[i], sub = season_vector[j])
+summary(fitpro)
+
+i <- 1997
+mu=c(45,60,75,85)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu=c(45,60,75,85), sigma=c(5,5,5,5), pi = c(0.05, 0.50, .435, .015)), dist='norm', iterlim=5000))
+#(fitpro <- mix(as.mixdata(df), mixparam(mu=c(40,50,70,85), sigma=c(3.42,4,4,4)), dist='norm')) 
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4]))
 summary(fitpro)
 
