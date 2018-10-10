@@ -268,3 +268,69 @@ df <- data_prep_season(age_df, i, "B")
 (fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(2,7,5,5)),dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
 plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
 summary(fitpro)
+
+i <- 2009
+mu=c(52,62,75,82)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3,3)), dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2009
+mu=c(45, 53,65,80)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(4,4,4,4)),dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2010
+mu=c(40,52,65,79,85)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3,3)), dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+mu=c(53,60,80)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3)),dist='norm', constr =mixconstr(consigma = "SEQ"),iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2011
+mu=c(40,52,65,79,85)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3,3)), dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+mu=c(50,65,80)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3,3)),dist='norm',constr =mixconstr(consigma = "SEQ"),iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2012
+mu=c(40,52,65,80)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3,3)), dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+mu=c(50,65,80)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3,3)),dist='norm',iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+i <- 2013
+mu=c(52,65,80)
+df <- data_prep_season(age_df, i, "A") #,pi = c(0.001, 0.50, .435, .0015)
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3)), dist='norm', constr =mixconstr(consigma = "SEQ"), iterlim=5000))
+plot(fitpro, main= paste(i," A"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
+
+mu=c(50,65,80)
+df <- data_prep_season(age_df, i, "B")
+(fitpro <- mix(as.mixdata(df), mixparam(mu, sigma=c(3,3,3,3)),dist='norm',iterlim=5000))
+plot(fitpro, main= paste(i," B"), sub = paste("chisq = ", round(fitpro$chisq,1), "df = ", fitpro$df, " starting mu = ", mu[1], mu[2], mu[3], mu[4], mu[5]))
+summary(fitpro)
